@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSpring, animated, useSpringValue } from "@react-spring/web";
+import { useSpring, animated, easings } from "@react-spring/web";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -22,25 +22,81 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const tabRefs = useRef<Map<string, HTMLAnchorElement | null>>(new Map());
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, height: 0 });
+  const [mounted, setMounted] = useState(false);
+  const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
+  // Track scroll
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Update indicator position when pathname changes or on mount
+  const updateIndicator = useCallback(() => {
+    const activeEl = tabRefs.current.get(pathname);
+    if (activeEl) {
+      const rect = activeEl.getBoundingClientRect();
+      const parentRect = activeEl.parentElement?.getBoundingClientRect();
+      if (parentRect) {
+        setIndicator({
+          left: rect.left - parentRect.left,
+          width: rect.width,
+          height: rect.height,
+        });
+      }
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mounted) {
+      setMounted(true);
+    }
+    // Small delay to ensure DOM is ready
+    requestAnimationFrame(() => updateIndicator());
+  }, [mounted, updateIndicator]);
+
+  // Re-calculate on resize
+  useEffect(() => {
+    const onResize = () => updateIndicator();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [updateIndicator]);
+
+  // Elastic spring for the morphing indicator
+  const indicatorSpring = useSpring({
+    left: indicator.left,
+    width: indicator.width,
+    height: indicator.height,
+    opacity: mounted && indicator.width > 0 ? 1 : 0,
+    config: {
+      mass: 1.2,
+      tension: 280,
+      friction: 18,
+      precision: 0.5,
+    },
+  });
+
+  // Nav bar background spring
   const navSpring = useSpring({
-    backdropFilter: scrolled ? "blur(20px)" : "blur(0px)",
-    backgroundColor: scrolled ? "rgba(255, 255, 255, 0.72)" : "rgba(255, 255, 255, 0)",
+    backdropFilter: scrolled ? "blur(20px)" as any : "blur(0px)" as any,
+    backgroundColor: scrolled
+      ? "rgba(255, 255, 255, 0.72)"
+      : "rgba(255, 255, 255, 0)",
     boxShadow: scrolled
       ? "0px 0px 0px 1px rgba(0,0,0,0.06), 0px 4px 20px rgba(0,0,0,0.04)"
       : "0px 0px 0px 0px transparent",
     config: { tension: 280, friction: 30 },
   });
 
+  // Mobile menu spring
   const mobileSpring = useSpring({
     opacity: mobileOpen ? 1 : 0,
-    transform: mobileOpen ? "translateY(0%) scale(1)" : "translateY(-2%) scale(0.98)",
+    transform: mobileOpen
+      ? "translateY(0%) scale(1)"
+      : "translateY(-2%) scale(0.98)",
     pointerEvents: mobileOpen ? "auto" : "none" as any,
     config: { tension: 300, friction: 28 },
   });
@@ -50,6 +106,13 @@ export function Navigation() {
   useEffect(() => {
     closeMobile();
   }, [pathname, closeMobile]);
+
+  const setTabRef = useCallback(
+    (href: string) => (el: HTMLAnchorElement | null) => {
+      tabRefs.current.set(href, el);
+    },
+    [],
+  );
 
   return (
     <animated.header
@@ -69,24 +132,41 @@ export function Navigation() {
           asad<span className="text-brand">.</span>
         </Link>
 
-        {/* Desktop nav — frosted glass tabs */}
-        <div className="hidden items-center gap-1 md:flex">
+        {/* Desktop nav — frosted glass tabs with liquid indicator */}
+        <div className="relative hidden items-center md:flex">
+          {/* Morphing indicator */}
+          <animated.div
+            style={{
+              left: indicatorSpring.left,
+              width: indicatorSpring.width,
+              height: indicatorSpring.height,
+              opacity: indicatorSpring.opacity,
+            }}
+            className="absolute top-0 rounded-lg bg-black/5 backdrop-blur-sm"
+          />
+
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
+            const isHovered = hoveredTab === link.href;
+
             return (
               <Link
                 key={link.href}
+                ref={setTabRef(link.href)}
                 href={link.href}
-                className={`relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-[var(--duration-fast)] ease-entrance ${
+                onMouseEnter={() => setHoveredTab(link.href)}
+                onMouseLeave={() => setHoveredTab(null)}
+                className={`relative px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-150 ease-out ${
                   isActive
-                    ? "text-foreground bg-black/5"
-                    : "text-foreground-muted hover:text-foreground hover:bg-black/3"
+                    ? "text-foreground"
+                    : "text-foreground-muted hover:text-foreground"
                 }`}
                 style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.01em" }}
               >
                 {link.label}
-                {isActive && (
-                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-brand" />
+                {/* Hover pulse ring */}
+                {isHovered && !isActive && (
+                  <span className="absolute inset-0 rounded-lg animate-pulse bg-black/3" />
                 )}
               </Link>
             );
@@ -107,9 +187,21 @@ export function Navigation() {
           aria-label="Toggle navigation"
         >
           <div className="flex flex-col items-center gap-[3px]">
-            <span className={`block h-[1.5px] w-4 bg-foreground rounded-full transition-transform duration-[var(--duration-fast)] ${mobileOpen ? "translate-y-[4.5px] rotate-45" : ""}`} />
-            <span className={`block h-[1.5px] w-4 bg-foreground rounded-full transition-opacity duration-[var(--duration-fast)] ${mobileOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-[1.5px] w-4 bg-foreground rounded-full transition-transform duration-[var(--duration-fast)] ${mobileOpen ? "-translate-y-[4.5px] -rotate-45" : ""}`} />
+            <span
+              className={`block h-[1.5px] w-4 bg-foreground rounded-full transition-transform duration-200 ease-out ${
+                mobileOpen ? "translate-y-[4.5px] rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`block h-[1.5px] w-4 bg-foreground rounded-full transition-opacity duration-200 ease-out ${
+                mobileOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`block h-[1.5px] w-4 bg-foreground rounded-full transition-transform duration-200 ease-out ${
+                mobileOpen ? "-translate-y-[4.5px] -rotate-45" : ""
+              }`}
+            />
           </div>
         </button>
       </nav>
