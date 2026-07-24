@@ -1,84 +1,60 @@
-/**
- * @fileoverview Standardised metadata + viewport generators for pages.
- *
- * `generateMetadata` builds a Next.js `Metadata` object — basic meta tags,
- * OpenGraph, Twitter cards, canonical URL, icons, robots. `metadataBase` is
- * always set (from `siteConfig`) so relative URLs (OG image, canonical)
- * resolve to absolute — required by social scrapers.
- *
- * `generateViewport` builds the `Viewport` export. `themeColor` lives here, not
- * in `Metadata` — Next deprecated it on the metadata object.
- */
-
-import { Metadata, Viewport } from "next";
-
+import type { Metadata, Viewport } from "next";
 import { siteConfig } from "@/lib/site";
 
-interface MetadataProps {
+interface PageMetadataProps {
   title?: string;
   description?: string;
-  /** Canonical path (e.g. `/about`) or absolute URL for this page. */
   url?: string;
-  /** Open Graph / Twitter image — path under `public/` or absolute URL. */
   ogImage?: string;
-  twitterHandle?: string;
-  author?: string;
-  siteName?: string;
 }
 
-export function generateMetadata({
-  title = siteConfig.name,
-  description = siteConfig.description,
-  url = "/",
-  ogImage = siteConfig.ogImage,
-  twitterHandle = siteConfig.twitterHandle,
-  author = siteConfig.author,
-  siteName = siteConfig.name,
-}: MetadataProps = {}): Metadata {
+export function generateMetadata(
+  props?: PageMetadataProps,
+): Metadata {
+  const title = props?.title
+    ? `${props.title} — ${siteConfig.name}`
+    : `${siteConfig.name} — Full-Stack AI Engineer`;
+
+  const description = props?.description ?? siteConfig.description;
+
   return {
-    // Resolves every relative URL below to an absolute one.
     metadataBase: new URL(siteConfig.url),
     title,
     description,
-    authors: [{ name: author }],
-    creator: author,
-    publisher: author,
-    alternates: {
-      canonical: url,
-    },
     openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: props?.url ?? siteConfig.url,
+      siteName: siteConfig.name,
       title,
       description,
-      url,
-      siteName,
-      // Dimensions must match the real asset; 1200×630 is the ideal size.
-      images: [{ url: ogImage, width: 900, height: 600 }],
-      locale: "en_US",
-      type: "website",
+      images: [
+        {
+          url: props?.ogImage ?? siteConfig.ogImage,
+          width: 1200,
+          height: 630,
+          alt: siteConfig.name,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
+      site: siteConfig.twitterHandle,
+      creator: siteConfig.twitterHandle,
       title,
       description,
-      site: twitterHandle,
-      creator: twitterHandle,
-      images: [ogImage],
+      images: [props?.ogImage ?? siteConfig.ogImage],
     },
-    icons: {
-      icon: [
-        { url: "/favicon.ico" },
-        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      ],
-      apple: [
-        { url: "/apple-icon-180x180.png", sizes: "180x180", type: "image/png" },
-      ],
-    },
-    manifest: "/manifest.json",
     robots: {
       index: true,
       follow: true,
     },
+    icons: {
+      icon: "/favicon.ico",
+      shortcut: "/favicon-16x16.png",
+      apple: "/apple-icon-180x180.png",
+    },
+    manifest: "/manifest.json",
   };
 }
 

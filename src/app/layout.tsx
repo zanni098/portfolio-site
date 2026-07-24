@@ -7,6 +7,8 @@ import {
 } from "@/utils/seo/generate-page-metadata";
 import { getSiteStructuredData } from "@/utils/seo/structured-data";
 
+import { Navigation } from "@/components/ui/Navigation";
+import { Footer } from "@/components/ui/Footer";
 import { LazyCookie } from "@/components/common/Cookie";
 import { AdaptiveGrid } from "@/components/common/grid";
 import { ReducedMotion } from "@/components/common/reduced-motion";
@@ -40,8 +42,10 @@ export default function RootLayout({
         <ScrollLayout>
           <AdaptiveGrid />
           <ReducedMotion />
+          <Navigation />
+          <main id="main-content">{children}</main>
+          <Footer />
           <LazyCookie />
-          {children}
         </ScrollLayout>
       </body>
     </html>

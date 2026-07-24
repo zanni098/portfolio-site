@@ -2,117 +2,293 @@
 
 /* ---------------------------------------------------------------------------
    TIER 1 — PRIMITIVES  (`--raw-*`)
-   Raw literal values. The only tier allowed to contain a hex/px/ms literal.
-   Never referenced in markup, never bound into @theme. Rename freely.
-   Grammar: --raw-<category>-<name>[-<shade>]
-   See obsidian/frontend/design-system.md → "Token naming convention".
    --------------------------------------------------------------------------- */
 :root {
+  /* Neutral ramp */
   --raw-color-white: #ffffff;
-  --raw-color-neutral-100: #ededed;
+  --raw-color-neutral-50: #fafafa;
+  --raw-color-neutral-100: #f5f5f5;
+  --raw-color-neutral-200: #e5e5e5;
+  --raw-color-neutral-300: #d4d4d4;
+  --raw-color-neutral-400: #a3a3a3;
+  --raw-color-neutral-500: #737373;
+  --raw-color-neutral-600: #525252;
+  --raw-color-neutral-700: #404040;
+  --raw-color-neutral-800: #262626;
   --raw-color-neutral-900: #171717;
   --raw-color-neutral-950: #0a0a0a;
+  --raw-color-black: #000000;
 
+  /* Brand — deep indigo / violet */
+  --raw-color-brand-50: #eef2ff;
+  --raw-color-brand-100: #e0e7ff;
+  --raw-color-brand-200: #c7d2fe;
+  --raw-color-brand-300: #a5b4fc;
+  --raw-color-brand-400: #818cf8;
+  --raw-color-brand-500: #6366f1;
+  --raw-color-brand-600: #4f46e5;
+  --raw-color-brand-700: #4338ca;
+  --raw-color-brand-800: #3730a3;
+  --raw-color-brand-900: #312e81;
+  --raw-color-brand-950: #1e1b4b;
+
+  /* Accent — warm amber/gold */
+  --raw-color-accent-50: #fffbeb;
+  --raw-color-accent-100: #fef3c7;
+  --raw-color-accent-200: #fde68a;
+  --raw-color-accent-300: #fcd34d;
+  --raw-color-accent-400: #fbbf24;
+  --raw-color-accent-500: #f59e0b;
+  --raw-color-accent-600: #d97706;
+  --raw-color-accent-700: #b45309;
+  --raw-color-accent-800: #92400e;
+  --raw-color-accent-900: #78350f;
+
+  /* Durations */
   --raw-duration-fast: 150ms;
-  --raw-duration-normal: 250ms;
+  --raw-duration-normal: 300ms;
+  --raw-duration-slow: 500ms;
+  --raw-duration-xslow: 800ms;
+
+  /* Spacing */
+  --raw-spacing-section: 8rem;
+  --raw-spacing-section-sm: 4rem;
 }
 
 /* ---------------------------------------------------------------------------
-   TIER 2 — SEMANTIC  (role names, no namespace prefix)
-   Purpose, not appearance. Always `var(--raw-*)` — never a literal.
-   This is the themeable layer: dark mode overrides happen HERE, which is why
-   these are separate from the @theme bindings below (see the note there).
-   Grammar: --<role>[-<variant>][-<state>]
+   TIER 2 — SEMANTIC TOKENS
    --------------------------------------------------------------------------- */
 :root {
+  /* Backgrounds */
   --background: var(--raw-color-white);
-  --foreground: var(--raw-color-neutral-900);
+  --background-alt: var(--raw-color-neutral-50);
+  --background-elevated: var(--raw-color-white);
+  --background-muted: var(--raw-color-neutral-100);
 
+  /* Foregrounds */
+  --foreground: var(--raw-color-neutral-900);
+  --foreground-muted: var(--raw-color-neutral-500);
+  --foreground-subtle: var(--raw-color-neutral-400);
+  --foreground-inverse: var(--raw-color-white);
+
+  /* Brand */
+  --brand: var(--raw-color-brand-500);
+  --brand-hover: var(--raw-color-brand-600);
+  --brand-light: var(--raw-color-brand-100);
+  --brand-dark: var(--raw-color-brand-900);
+
+  /* Accent */
+  --accent: var(--raw-color-accent-400);
+  --accent-hover: var(--raw-color-accent-500);
+  --accent-muted: var(--raw-color-accent-100);
+
+  /* Borders */
+  --border: var(--raw-color-neutral-200);
+  --border-hover: var(--raw-color-neutral-300);
+  --border-strong: var(--raw-color-neutral-400);
+
+  /* Surfaces */
+  --surface-card: var(--raw-color-white);
+  --surface-card-hover: var(--raw-color-neutral-50);
+  --surface-overlay: rgba(0, 0, 0, 0.5);
+  --surface-glass: rgba(255, 255, 255, 0.8);
+
+  /* Durations */
   --duration-fast: var(--raw-duration-fast);
   --duration-normal: var(--raw-duration-normal);
+  --duration-slow: var(--raw-duration-slow);
+  --duration-xslow: var(--raw-duration-xslow);
+
+  /* Section spacing */
+  --spacing-section: var(--raw-spacing-section);
+  --spacing-section-sm: var(--raw-spacing-section-sm);
 }
 
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: var(--raw-color-neutral-950);
+    --background-alt: var(--raw-color-neutral-900);
+    --background-elevated: var(--raw-color-neutral-900);
+    --background-muted: var(--raw-color-neutral-800);
+
     --foreground: var(--raw-color-neutral-100);
+    --foreground-muted: var(--raw-color-neutral-400);
+    --foreground-subtle: var(--raw-color-neutral-500);
+    --foreground-inverse: var(--raw-color-black);
+
+    --brand: var(--raw-color-brand-400);
+    --brand-hover: var(--raw-color-brand-300);
+    --brand-light: var(--raw-color-brand-900);
+    --brand-dark: var(--raw-color-brand-200);
+
+    --accent: var(--raw-color-accent-300);
+    --accent-hover: var(--raw-color-accent-200);
+    --accent-muted: var(--raw-color-accent-900);
+
+    --border: var(--raw-color-neutral-800);
+    --border-hover: var(--raw-color-neutral-700);
+    --border-strong: var(--raw-color-neutral-600);
+
+    --surface-card: var(--raw-color-neutral-900);
+    --surface-card-hover: var(--raw-color-neutral-800);
+    --surface-glass: rgba(0, 0, 0, 0.8);
   }
 }
 
 /* ---------------------------------------------------------------------------
-   THEME BINDINGS — map semantic tokens into Tailwind namespaces.
-   Every entry is exactly `--<tw-namespace>-<role>: var(--<role>)`.
-   `inline` is required: it inlines the var() into each utility, so the
-   dark-mode overrides on the Tier 2 tokens above cascade. Binding a literal
-   here instead would freeze the value and break theming.
-
-   Only these namespaces generate utilities (verified against tailwindcss
-   v4.3.3): --color-* --spacing-* --radius-* --leading-* --tracking-* --text-*
-   --font-* --ease-* --breakpoint-* --container-* --shadow-* --blur-* --animate-*
-   NOTE: there is NO --duration-* namespace in v4 — `duration-fast` compiles to
-   nothing. Durations stay Tier 2 only and are used as duration-[var(--duration-fast)].
+   THEME BINDINGS — Map semantic tokens to Tailwind namespaces
    --------------------------------------------------------------------------- */
 @theme inline {
   --color-background: var(--background);
+  --color-background-alt: var(--background-alt);
+  --color-background-elevated: var(--background-elevated);
+  --color-background-muted: var(--background-muted);
   --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+  --color-foreground-inverse: var(--foreground-inverse);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-light: var(--brand-light);
+  --color-brand-dark: var(--brand-dark);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-border-strong: var(--border-strong);
+  --color-surface-card: var(--surface-card);
+  --color-surface-card-hover: var(--surface-card-hover);
+  --color-surface-overlay: var(--surface-overlay);
+  --color-surface-glass: var(--surface-glass);
+
   --font-sans: var(--font-onest);
 
-  /* Leading floor for clipped TextEngine reveals — see
-     obsidian/frontend/text-engine.md → "Alignment & line-height". */
   --leading-display: 1.1;
+  --leading-relaxed: 1.6;
 
   --ease-entrance: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* Responsive max-widths */
+  --container-content: 1280px;
+  --container-narrow: 800px;
+  --container-wide: 1440px;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-}
-
+/* ---------------------------------------------------------------------------
+   BASE LAYER
+   --------------------------------------------------------------------------- */
 @layer base {
-  /* Adaptive scaling grid — scales the root font-size with the viewport so a
-     rem-based layout stays proportional. Each breakpoint divides FONT_BASE
-     (16px) by the design base width its range was laid out at:
-       font-size: 16 * 100 / baseWidth  (vw)
-     Above 1920px the AdaptiveGrid component takes over (scale-up).
-     Keep in sync with src/components/common/grid/grid.config.ts. */
   html {
     font-size: 16px;
+    scroll-behavior: smooth;
   }
 
   @media (max-width: 1920px) {
-    html {
-      font-size: 0.833333vw; /* 16 * 100 / 1920 */
-    }
+    html { font-size: 0.833333vw; }
   }
-
   @media (max-width: 1440px) {
-    html {
-      font-size: 1.111111vw; /* 16 * 100 / 1440 */
-    }
+    html { font-size: 1.111111vw; }
   }
-
   @media (max-width: 1024px) {
-    html {
-      font-size: 1.5625vw; /* 16 * 100 / 1024 */
-    }
+    html { font-size: 1.5625vw; }
   }
-
   @media (max-width: 640px) {
-    html {
-      font-size: 4.444444vw; /* 16 * 100 / 360 */
-    }
+    html { font-size: 4.444444vw; }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-onest), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--brand);
+    color: var(--foreground-inverse);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
   }
 }
 
+/* ---------------------------------------------------------------------------
+   UTILITIES LAYER
+   --------------------------------------------------------------------------- */
 @layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
 }
 
+/* ---------------------------------------------------------------------------
+   COMPONENTS LAYER
+   --------------------------------------------------------------------------- */
 @layer components {
+  .glass {
+    background: var(--surface-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .glass-dark {
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .gradient-brand {
+    background: linear-gradient(135deg, var(--brand), var(--accent));
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--brand), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-overlay {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--background) 100%
+    );
+  }
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }

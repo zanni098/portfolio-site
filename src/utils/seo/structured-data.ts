@@ -1,35 +1,54 @@
-/**
- * @fileoverview JSON-LD structured data helpers.
- *
- * Structured data lets search engines understand the site as entities
- * (Organization, WebSite) rather than just text — improving rich results.
- * Render the output inside a `<script type="application/ld+json">` tag.
- */
-
 import { siteConfig } from "@/lib/site";
 
-/**
- * Organization + WebSite schema for the site root. Emit once, in the root
- * layout. The two nodes are linked by `@id` so crawlers treat them as related.
- */
 export function getSiteStructuredData() {
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Organization",
-        "@id": `${siteConfig.url}/#organization`,
-        name: siteConfig.name,
+        "@type": "Person",
+        "@id": `${siteConfig.url}/#person`,
+        name: "Asad Jehan Zeb",
+        givenName: "Asad",
+        familyName: "Jehan Zeb",
+        alternateName: ["zanni098", "zuhaib khan", "Jolly Roger"],
+        description: siteConfig.description,
         url: siteConfig.url,
-        logo: `${siteConfig.url}/android-icon-192x192.png`,
+        email: siteConfig.email,
+        image: `${siteConfig.url}/open-graph.png`,
+        jobTitle: "Full-Stack AI Engineer",
+        knowsAbout: [
+          "AI Agent Tooling",
+          "LLM Evaluation",
+          "Software Engineering",
+          "Generative AI",
+          "Open Source Development",
+        ],
+        sameAs: Object.values(siteConfig.social),
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Islamabad",
+          addressCountry: "PK",
+        },
+        alumniOf: [
+          {
+            "@type": "CollegeOrUniversity",
+            name: "University of Utah",
+          },
+          {
+            "@type": "CollegeOrUniversity",
+            name: "The Fazlehaq College, Mardan",
+          },
+        ],
       },
       {
         "@type": "WebSite",
         "@id": `${siteConfig.url}/#website`,
+        url: siteConfig.url,
         name: siteConfig.name,
         description: siteConfig.description,
-        url: siteConfig.url,
-        publisher: { "@id": `${siteConfig.url}/#organization` },
+        publisher: {
+          "@id": `${siteConfig.url}/#person`,
+        },
       },
     ],
   };
