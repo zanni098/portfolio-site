@@ -1,6 +1,7 @@
 "use client";
 
 import { Inview } from "@/components/animation/springs/in-view";
+import { VideoHero } from "@/components/ui/VideoHero";
 
 const skillCategories = [
   { name: "Frontend", skills: ["TypeScript", "React", "Next.js", "Tailwind CSS", "HTML/CSS", "React Spring"] },
@@ -18,23 +19,21 @@ const languages = [
 export function ResumeView() {
   return (
     <>
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20">
-        <div className="mx-auto max-w-content px-6 md:px-10">
-          <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
-            <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
-              Resume
-            </p>
-            <h1 className="text-4xl font-medium leading-display tracking-display md:text-5xl lg:text-6xl" style={{ fontFeatureSettings: "'liga' 1" }}>
-              Skills &{" "}
-              <span className="gradient-text">expertise</span>.
-            </h1>
-            <p className="mt-4 max-w-2xl text-lg text-foreground-muted">
-              Full-stack AI engineer with deep expertise in agentic AI tooling,
-              developer infrastructure, and production software engineering.
-            </p>
-          </Inview>
-        </div>
-      </section>
+      <VideoHero videoSrc="/assets/hero/sea-storm.mp4" posterSrc="/assets/hero/sea-storm.jpg">
+        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" config={{ tension: 120, friction: 20 }}>
+          <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
+            Resume
+          </p>
+          <h1 className="text-4xl font-medium leading-display tracking-display md:text-5xl lg:text-6xl" style={{ fontFeatureSettings: "'liga' 1" }}>
+            Skills &{" "}
+            <span className="gradient-text">expertise</span>.
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg text-foreground-muted">
+            Full-stack AI engineer with deep expertise in agentic AI tooling,
+            developer infrastructure, and production software engineering.
+          </p>
+        </Inview>
+      </VideoHero>
 
       <section className="mx-auto max-w-content px-6 pb-16 md:px-10 md:pb-20">
         <div className="grid gap-6 md:grid-cols-2">

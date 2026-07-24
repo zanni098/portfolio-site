@@ -1,6 +1,7 @@
 "use client";
 
 import { Inview } from "@/components/animation/springs/in-view";
+import { VideoHero } from "@/components/ui/VideoHero";
 
 const projects = [
   {
@@ -83,9 +84,8 @@ const projects = [
 export function ProjectsView() {
   return (
     <>
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20">
-        <div className="mx-auto max-w-content px-6 md:px-10">
-          <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
+      <VideoHero videoSrc="/assets/hero/sea-storm.mp4" posterSrc="/assets/hero/sea-storm.jpg">
+          <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" config={{ tension: 120, friction: 20 }}>
             <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
               Projects
             </p>
@@ -98,8 +98,7 @@ export function ProjectsView() {
               ships with the same engineering DNA.
             </p>
           </Inview>
-        </div>
-      </section>
+      </VideoHero>
 
       <section className="mx-auto max-w-content px-6 pb-20 md:px-10 md:pb-28">
         <div className="grid gap-6 md:grid-cols-2">

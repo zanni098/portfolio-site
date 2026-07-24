@@ -1,6 +1,7 @@
 "use client";
 
 import { Inview } from "@/components/animation/springs/in-view";
+import { VideoHero } from "@/components/ui/VideoHero";
 
 const films = [
   {
@@ -15,24 +16,22 @@ const films = [
 export function FilmsView() {
   return (
     <>
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20">
-        <div className="mx-auto max-w-content px-6 md:px-10">
-          <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
-            <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
-              Films
-            </p>
-            <h1 className="text-4xl font-medium leading-display tracking-display md:text-5xl lg:text-6xl" style={{ fontFeatureSettings: "'liga' 1" }}>
-              Exploring generative{" "}
-              <span className="gradient-text">AI filmmaking</span>.
-            </h1>
-            <p className="mt-4 max-w-2xl text-lg text-foreground-muted">
-              Pushing the boundaries of AI-generated cinema through The Boring
-              Studio — a creative outlet for experimental short films and video
-              projects powered by generative AI.
-            </p>
-          </Inview>
-        </div>
-      </section>
+      <VideoHero videoSrc="/assets/hero/flower-arc.mp4" posterSrc="/assets/hero/flower-arc.jpg">
+        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" config={{ tension: 120, friction: 20 }}>
+          <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
+            Films
+          </p>
+          <h1 className="text-4xl font-medium leading-display tracking-display md:text-5xl lg:text-6xl" style={{ fontFeatureSettings: "'liga' 1" }}>
+            Exploring generative{" "}
+            <span className="gradient-text">AI filmmaking</span>.
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg text-foreground-muted">
+            Pushing the boundaries of AI-generated cinema through The Boring
+            Studio — a creative outlet for experimental short films and video
+            projects powered by generative AI.
+          </p>
+        </Inview>
+      </VideoHero>
 
       <section className="mx-auto max-w-content px-6 pb-20 md:px-10 md:pb-28">
         <div className="grid gap-6 md:grid-cols-2">

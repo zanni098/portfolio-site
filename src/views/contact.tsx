@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Inview } from "@/components/animation/springs/in-view";
+import { VideoHero } from "@/components/ui/VideoHero";
 import { siteConfig } from "@/lib/site";
 
 const socialLinks = [
@@ -24,23 +25,21 @@ export function ContactView() {
 
   return (
     <>
-      <section className="pt-32 pb-16 md:pt-40 md:pb-20">
-        <div className="mx-auto max-w-content px-6 md:px-10">
-          <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
-            <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
-              Contact
-            </p>
-            <h1 className="text-4xl font-medium leading-display tracking-display md:text-5xl lg:text-6xl" style={{ fontFeatureSettings: "'liga' 1" }}>
-              Get in{" "}
-              <span className="gradient-text">touch</span>.
-            </h1>
-            <p className="mt-4 max-w-2xl text-lg text-foreground-muted">
-              Open to freelance projects, collaborations, and opportunities in
-              AI engineering, agent development, and creative technology.
-            </p>
-          </Inview>
-        </div>
-      </section>
+      <VideoHero videoSrc="/assets/hero/hills.mp4" posterSrc="/assets/hero/hills.jpg">
+        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" config={{ tension: 120, friction: 20 }}>
+          <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
+            Contact
+          </p>
+          <h1 className="text-4xl font-medium leading-display tracking-display md:text-5xl lg:text-6xl" style={{ fontFeatureSettings: "'liga' 1" }}>
+            Get in{" "}
+            <span className="gradient-text">touch</span>.
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg text-foreground-muted">
+            Open to freelance projects, collaborations, and opportunities in
+            AI engineering, agent development, and creative technology.
+          </p>
+        </Inview>
+      </VideoHero>
 
       <section className="mx-auto max-w-content px-6 pb-20 md:px-10 md:pb-28">
         <div className="grid gap-12 md:grid-cols-2">
@@ -57,33 +56,15 @@ export function ContactView() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-foreground-muted">Name</label>
-                  <input
-                    type="text" id="name" required
-                    value={formState.name}
-                    onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))}
-                    className="card w-full px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:shadow-elevated"
-                    placeholder="Your name"
-                  />
+                  <input type="text" id="name" required value={formState.name} onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))} className="card w-full px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:shadow-elevated" placeholder="Your name" />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-foreground-muted">Email</label>
-                  <input
-                    type="email" id="email" required
-                    value={formState.email}
-                    onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))}
-                    className="card w-full px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:shadow-elevated"
-                    placeholder="your@email.com"
-                  />
+                  <input type="email" id="email" required value={formState.email} onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))} className="card w-full px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:shadow-elevated" placeholder="your@email.com" />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-foreground-muted">Message</label>
-                  <textarea
-                    id="message" required rows={5}
-                    value={formState.message}
-                    onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))}
-                    className="card w-full px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:shadow-elevated resize-none"
-                    placeholder="Tell me about your project..."
-                  />
+                  <textarea id="message" required rows={5} value={formState.message} onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))} className="card w-full px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:shadow-elevated resize-none" placeholder="Tell me about your project..." />
                 </div>
                 <button type="submit" className="btn-primary">Send Message</button>
               </form>
@@ -104,13 +85,7 @@ export function ContactView() {
                 <h3 className="text-sm font-medium uppercase tracking-widest text-foreground-muted">Connect</h3>
                 <div className="mt-4 space-y-3">
                   {socialLinks.map((link) => (
-                    <a
-                      key={link.name}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="card p-4 group flex items-center justify-between transition-shadow hover:shadow-elevated"
-                    >
+                    <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="card p-4 group flex items-center justify-between transition-shadow hover:shadow-elevated">
                       <span className="text-sm font-medium tracking-tight" style={{ fontFeatureSettings: "'liga' 1" }}>{link.name}</span>
                       <span className="text-xs text-foreground-muted transition-colors group-hover:text-foreground">{link.handle} →</span>
                     </a>

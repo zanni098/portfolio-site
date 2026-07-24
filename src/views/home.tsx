@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSpring, animated } from "@react-spring/web";
 import { Inview } from "@/components/animation/springs/in-view";
+import { VideoHero } from "@/components/ui/VideoHero";
 
 const stats = [
   { label: "Projects", value: "11+" },
@@ -78,69 +79,54 @@ export function HomeView() {
   return (
     <>
       {/* ──────── HERO ──────── */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        {/* Subtle grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
+      <VideoHero videoSrc="/assets/hero/flower-arc.mp4" posterSrc="/assets/hero/flower-arc.jpg">
+        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" config={titleSpring}>
+          <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
+            Full-Stack AI Engineer
+          </p>
+        </Inview>
 
-        {/* Glow orbs */}
-        <div className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/8 blur-[120px]" />
+        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={200} config={titleSpring}>
+          <h1
+            className="text-5xl font-medium leading-display tracking-display md:text-7xl lg:text-8xl"
+            style={{ fontFeatureSettings: "'liga' 1" }}
+          >
+            Asad{" "}
+            <span className="gradient-text">Jehan Zeb</span>
+          </h1>
+        </Inview>
 
-        <div className="relative z-10 mx-auto max-w-content px-6 text-center md:px-10">
-          <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" config={titleSpring}>
-            <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
-              Full-Stack AI Engineer
-            </p>
-          </Inview>
+        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={400} config={titleSpring}>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
+            Building agentic AI tooling, contributing to open source at scale,
+            and exploring generative filmmaking. Founder of Symbiothus.
+          </p>
+        </Inview>
 
-          <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={200} config={titleSpring}>
-            <h1
-              className="text-5xl font-medium leading-display tracking-display md:text-7xl lg:text-8xl"
-              style={{ fontFeatureSettings: "'liga' 1" }}
-            >
-              Asad{" "}
-              <span className="gradient-text">Jehan Zeb</span>
-            </h1>
-          </Inview>
-
-          <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={400} config={titleSpring}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
-              Building agentic AI tooling, contributing to open source at scale,
-              and exploring generative filmmaking. Founder of Symbiothus.
-            </p>
-          </Inview>
-
-          <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={600} config={titleSpring}>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <Link href="/projects" className="btn-primary">
-                View Projects
-              </Link>
-              <Link href="/contact" className="btn-ghost">
-                Get in Touch
-              </Link>
-            </div>
-          </Inview>
-        </div>
-
-        {/* Scroll indicator */}
-        <animated.div
-          style={scrollIndicator}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-xs font-medium text-foreground-muted uppercase tracking-widest">
-              Scroll
-            </span>
-            <div className="h-8 w-px bg-gradient-to-b from-foreground-muted to-transparent" />
+        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={600} config={titleSpring}>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <Link href="/projects" className="btn-primary">
+              View Projects
+            </Link>
+            <Link href="/contact" className="btn-ghost">
+              Get in Touch
+            </Link>
           </div>
-        </animated.div>
-      </section>
+        </Inview>
+      </VideoHero>
+
+      {/* Scroll indicator */}
+      <animated.div
+        style={scrollIndicator}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
+      >
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-xs font-medium text-foreground-muted uppercase tracking-widest">
+            Scroll
+          </span>
+          <div className="h-8 w-px bg-gradient-to-b from-foreground-muted to-transparent" />
+        </div>
+      </animated.div>
 
       {/* ──────── STATS ──────── */}
       <section className="shadow-border">
