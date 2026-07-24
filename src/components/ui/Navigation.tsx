@@ -29,10 +29,10 @@ export function Navigation() {
   }, []);
 
   const bgSpring = useSpring({
-    backgroundColor: scrolled ? "rgba(8, 9, 10, 0.85)" : "transparent",
+    backgroundColor: scrolled ? "rgba(255, 255, 255, 0.9)" : "transparent",
     backdropFilter: scrolled ? "blur(12px)" : "blur(0px)",
     boxShadow: scrolled
-      ? "0px 0px 0px 1px rgba(255,255,255,0.08)"
+      ? "0px 0px 0px 1px rgba(0,0,0,0.08)"
       : "0px 0px 0px 0px transparent",
     config: { tension: 280, friction: 30 },
   });
@@ -95,28 +95,16 @@ export function Navigation() {
           className="flex h-8 w-8 flex-col items-center justify-center gap-1 md:hidden"
           aria-label="Toggle navigation"
         >
-          <span
-            className={`block h-px w-5 bg-foreground transition-transform duration-[var(--duration-fast)] ${
-              mobileOpen ? "translate-y-1.5 rotate-45" : ""
-            }`}
-          />
-          <span
-            className={`block h-px w-5 bg-foreground transition-opacity duration-[var(--duration-fast)] ${
-              mobileOpen ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`block h-px w-5 bg-foreground transition-transform duration-[var(--duration-fast)] ${
-              mobileOpen ? "-translate-y-1.5 -rotate-45" : ""
-            }`}
-          />
+          <span className={`block h-px w-5 bg-foreground transition-transform duration-[var(--duration-fast)] ${mobileOpen ? "translate-y-1.5 rotate-45" : ""}`} />
+          <span className={`block h-px w-5 bg-foreground transition-opacity duration-[var(--duration-fast)] ${mobileOpen ? "opacity-0" : ""}`} />
+          <span className={`block h-px w-5 bg-foreground transition-transform duration-[var(--duration-fast)] ${mobileOpen ? "-translate-y-1.5 -rotate-45" : ""}`} />
         </button>
       </nav>
 
       {/* Mobile menu */}
       <animated.div
         style={mobileSpring}
-        className="absolute left-0 right-0 top-16 border-t border-border bg-background-alt md:hidden"
+        className="absolute left-0 right-0 top-16 border-t border-border bg-white md:hidden"
       >
         <div className="flex flex-col gap-1 px-6 py-6">
           {navLinks.map((link) => (
@@ -132,10 +120,7 @@ export function Navigation() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/contact"
-            className="btn-primary mt-4 inline-flex w-full justify-center"
-          >
+          <Link href="/contact" className="btn-primary mt-4 inline-flex w-full justify-center">
             Get in Touch
           </Link>
         </div>
