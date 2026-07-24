@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSpring, animated, useTrail } from "@react-spring/web";
+import { useSpring, animated } from "@react-spring/web";
 import { Inview } from "@/components/animation/springs/in-view";
 
 const stats = [
@@ -66,17 +66,8 @@ function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: str
 }
 
 const titleSpring = { tension: 120, friction: 20 };
-const titleFrom = { opacity: 0, transform: "translateY(40px)" };
-const titleTo = { opacity: 1, transform: "translateY(0px)" };
 
 export function HomeView() {
-  const trail = useTrail(3, {
-    from: { opacity: 0, y: 30 },
-    to: { opacity: 1, y: 0 },
-    config: { tension: 120, friction: 18 },
-    delay: 800,
-  });
-
   const scrollIndicator = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -88,12 +79,9 @@ export function HomeView() {
     <>
       {/* ──────── HERO ──────── */}
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-950 via-background to-background" />
-
-        {/* Animated grid pattern */}
+        {/* Subtle grid pattern */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)",
@@ -101,44 +89,39 @@ export function HomeView() {
           }}
         />
 
-        {/* Gradient orbs */}
-        <div className="pointer-events-none absolute left-1/2 top-1/3 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/10 blur-[120px]" />
-        <div className="pointer-events-none absolute right-1/4 top-2/3 h-[400px] w-[400px] rounded-full bg-accent/5 blur-[100px]" />
+        {/* Glow orbs */}
+        <div className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/8 blur-[120px]" />
 
-        {/* Hero content */}
         <div className="relative z-10 mx-auto max-w-content px-6 text-center md:px-10">
-          <Inview from={titleFrom} to={titleTo} config={titleSpring} mode="once">
-            <p className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-brand">
+          <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" config={titleSpring}>
+            <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
               Full-Stack AI Engineer
             </p>
           </Inview>
 
-          <Inview from={titleFrom} to={titleTo} config={titleSpring} mode="once" delayIn={200}>
-            <h1 className="text-5xl font-medium leading-display tracking-tight md:text-7xl lg:text-8xl">
+          <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={200} config={titleSpring}>
+            <h1
+              className="text-5xl font-medium leading-display tracking-display md:text-7xl lg:text-8xl"
+              style={{ fontFeatureSettings: "'liga' 1" }}
+            >
               Asad{" "}
               <span className="gradient-text">Jehan Zeb</span>
             </h1>
           </Inview>
 
-          <Inview from={titleFrom} to={titleTo} config={titleSpring} mode="once" delayIn={400}>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted md:text-xl">
+          <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={400} config={titleSpring}>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
               Building agentic AI tooling, contributing to open source at scale,
               and exploring generative filmmaking. Founder of Symbiothus.
             </p>
           </Inview>
 
-          <Inview from={titleFrom} to={titleTo} config={titleSpring} mode="once" delayIn={600}>
+          <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={600} config={titleSpring}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <Link
-                href="/projects"
-                className="rounded-full bg-brand px-6 py-3 text-sm font-medium text-foreground-inverse transition-all duration-[var(--duration-fast)] ease-entrance hover:bg-brand-hover"
-              >
+              <Link href="/projects" className="btn-primary">
                 View Projects
               </Link>
-              <Link
-                href="/contact"
-                className="rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground-muted transition-all duration-[var(--duration-fast)] ease-entrance hover:border-foreground-muted hover:text-foreground"
-              >
+              <Link href="/contact" className="btn-ghost">
                 Get in Touch
               </Link>
             </div>
@@ -151,7 +134,7 @@ export function HomeView() {
           className="absolute bottom-10 left-1/2 -translate-x-1/2"
         >
           <div className="flex flex-col items-center gap-2">
-            <span className="text-xs uppercase tracking-widest text-foreground-muted">
+            <span className="text-xs font-medium text-foreground-muted uppercase tracking-widest">
               Scroll
             </span>
             <div className="h-8 w-px bg-gradient-to-b from-foreground-muted to-transparent" />
@@ -160,25 +143,29 @@ export function HomeView() {
       </section>
 
       {/* ──────── STATS ──────── */}
-      <section className="border-y border-border">
+      <section className="shadow-border">
         <div className="mx-auto max-w-content px-6 py-16 md:px-10 md:py-20">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            {stats.map((stat) => (
+            {stats.map((stat, i) => (
               <Inview
                 key={stat.label}
                 from={{ opacity: 0, y: 20 }}
                 to={{ opacity: 1, y: 0 }}
                 mode="once"
+                delayIn={i * 100}
                 config={{ tension: 100, friction: 20 }}
               >
                 <div className="text-center">
-                  <div className="text-3xl font-medium tracking-tight md:text-4xl">
+                  <div
+                    className="text-3xl font-medium tracking-display md:text-4xl"
+                    style={{ fontFeatureSettings: "'liga' 1" }}
+                  >
                     <AnimatedCounter
                       target={parseInt(stat.value.replace(/[^0-9]/g, ""))}
                       suffix={stat.value.replace(/[0-9]/g, "")}
                     />
                   </div>
-                  <div className="mt-1 text-xs uppercase tracking-widest text-foreground-muted">
+                  <div className="mt-1 text-xs font-medium uppercase tracking-widest text-foreground-muted">
                     {stat.label}
                   </div>
                 </div>
@@ -191,7 +178,10 @@ export function HomeView() {
       {/* ──────── FEATURED PROJECTS ──────── */}
       <section className="mx-auto max-w-content px-6 py-20 md:px-10 md:py-28">
         <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
-          <h2 className="text-3xl font-medium tracking-tight md:text-4xl">
+          <h2
+            className="text-3xl font-medium tracking-heading md:text-4xl"
+            style={{ fontFeatureSettings: "'liga' 1" }}
+          >
             Featured Work
           </h2>
           <p className="mt-3 max-w-xl text-foreground-muted">
@@ -210,20 +200,22 @@ export function HomeView() {
               delayIn={i * 150}
               config={{ tension: 100, friction: 20 }}
             >
-              <div className="group relative flex h-full flex-col rounded-2xl border border-border bg-surface-card p-6 transition-all duration-[var(--duration-normal)] ease-entrance hover:border-border-hover hover:bg-surface-card-hover">
+              <div className="card p-6 group">
                 <div className="mb-4 flex items-center gap-2">
                   <div className="h-2 w-2 rounded-full bg-brand" />
-                  <h3 className="text-lg font-medium">{project.title}</h3>
+                  <h3
+                    className="text-lg font-medium tracking-tight"
+                    style={{ fontFeatureSettings: "'liga' 1" }}
+                  >
+                    {project.title}
+                  </h3>
                 </div>
                 <p className="flex-1 text-sm leading-relaxed text-foreground-muted">
                   {project.description}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full bg-background-muted px-3 py-1 text-xs text-foreground-muted"
-                    >
+                    <span key={t} className="pill">
                       {t}
                     </span>
                   ))}
@@ -231,7 +223,8 @@ export function HomeView() {
                 <div className="mt-4 flex items-center gap-4">
                   <Link
                     href={project.href}
-                    className="text-xs font-medium uppercase tracking-widest text-brand transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-brand-hover"
+                    className="text-sm font-medium text-brand transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-brand-hover"
+                    style={{ fontFeatureSettings: "'liga' 1" }}
                   >
                     Learn More
                   </Link>
@@ -239,7 +232,7 @@ export function HomeView() {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-foreground-muted transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-foreground"
+                    className="text-sm text-foreground-muted transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-foreground"
                   >
                     GitHub →
                   </a>
@@ -251,14 +244,17 @@ export function HomeView() {
       </section>
 
       {/* ──────── OPEN SOURCE CTA ──────── */}
-      <section className="border-t border-border">
+      <section className="shadow-border">
         <div className="mx-auto max-w-content px-6 py-20 md:px-10 md:py-28">
           <div className="mx-auto max-w-narrow text-center">
             <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
-              <p className="text-sm font-medium uppercase tracking-[0.2em] text-brand">
+              <p className="mb-4 text-sm font-medium text-brand" style={{ letterSpacing: "-0.01em" }}>
                 Open Source
               </p>
-              <h2 className="mt-4 text-3xl font-medium tracking-tight md:text-4xl">
+              <h2
+                className="text-3xl font-medium tracking-heading md:text-4xl"
+                style={{ fontFeatureSettings: "'liga' 1" }}
+              >
                 Merged into projects with{" "}
                 <span className="gradient-text">425K+ combined stars</span>
               </h2>
@@ -268,7 +264,7 @@ export function HomeView() {
               </p>
               <Link
                 href="/opensource"
-                className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-brand transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-brand-hover"
+                className="btn-ghost mt-8 inline-flex"
               >
                 View Contributions →
               </Link>

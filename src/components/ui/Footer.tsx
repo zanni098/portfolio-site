@@ -28,8 +28,9 @@ export function Footer() {
             <Link
               href="/"
               className="text-lg font-medium tracking-tight text-foreground"
+              style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.03em" }}
             >
-              Asad<span className="text-brand">.</span>
+              asad<span className="text-brand">.</span>
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-foreground-muted">
               Full-stack AI engineer building agentic tooling, contributing to

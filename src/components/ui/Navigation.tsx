@@ -29,10 +29,11 @@ export function Navigation() {
   }, []);
 
   const bgSpring = useSpring({
-    backgroundColor: scrolled
-      ? "rgba(10, 10, 10, 0.85)"
-      : "rgba(10, 10, 10, 0)",
+    backgroundColor: scrolled ? "rgba(8, 9, 10, 0.85)" : "transparent",
     backdropFilter: scrolled ? "blur(12px)" : "blur(0px)",
+    boxShadow: scrolled
+      ? "0px 0px 0px 1px rgba(255,255,255,0.08)"
+      : "0px 0px 0px 0px transparent",
     config: { tension: 280, friction: 30 },
   });
 
@@ -57,29 +58,34 @@ export function Navigation() {
       <nav className="mx-auto flex h-16 max-w-content items-center justify-between">
         <Link
           href="/"
-          className="text-sm font-medium tracking-tight text-foreground hover:text-brand transition-colors duration-[var(--duration-fast)] ease-entrance"
+          className="text-sm font-medium tracking-tight text-foreground transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-brand"
+          style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.02em" }}
         >
-          Asad<span className="text-brand">.</span>
+          asad<span className="text-brand">.</span>
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-0.5 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`relative px-3 py-2 text-xs font-medium uppercase tracking-widest transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-foreground ${
+              className={`relative px-3 py-2 text-sm font-medium transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-foreground ${
                 pathname === link.href
                   ? "text-foreground"
                   : "text-foreground-muted"
               }`}
+              style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.01em" }}
             >
               {link.label}
-              {pathname === link.href && (
-                <span className="absolute bottom-0 left-1/2 h-px w-4 -translate-x-1/2 bg-brand" />
-              )}
             </Link>
           ))}
+          <Link
+            href="/contact"
+            className="btn-ghost ml-3 text-sm"
+          >
+            Get in Touch
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -110,7 +116,7 @@ export function Navigation() {
       {/* Mobile menu */}
       <animated.div
         style={mobileSpring}
-        className="absolute left-0 right-0 top-16 border-t border-border bg-background-elevated md:hidden"
+        className="absolute left-0 right-0 top-16 border-t border-border bg-background-alt md:hidden"
       >
         <div className="flex flex-col gap-1 px-6 py-6">
           {navLinks.map((link) => (
@@ -126,6 +132,12 @@ export function Navigation() {
               {link.label}
             </Link>
           ))}
+          <Link
+            href="/contact"
+            className="btn-primary mt-4 inline-flex w-full justify-center"
+          >
+            Get in Touch
+          </Link>
         </div>
       </animated.div>
     </animated.header>

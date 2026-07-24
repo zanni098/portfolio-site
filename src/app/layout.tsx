@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Onest } from "next/font/google";
 
 import {
   generateMetadata,
@@ -16,12 +15,6 @@ import { ScrollLayout } from "@/layouts/scroll-layout";
 
 import "@/app/globals.css";
 
-const onest = Onest({
-  variable: "--font-onest",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export const metadata: Metadata = generateMetadata();
 export const viewport: Viewport = generateViewport();
 
@@ -32,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${onest.variable}`}>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

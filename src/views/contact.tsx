@@ -14,16 +14,11 @@ const socialLinks = [
 ];
 
 export function ContactView() {
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, this would send to an API endpoint
     setSubmitted(true);
   };
 
@@ -32,10 +27,10 @@ export function ContactView() {
       <section className="pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="mx-auto max-w-content px-6 md:px-10">
           <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-brand">
+            <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
               Contact
             </p>
-            <h1 className="mt-4 text-4xl font-medium leading-display tracking-tight md:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-medium leading-display tracking-display md:text-5xl lg:text-6xl" style={{ fontFeatureSettings: "'liga' 1" }}>
               Get in{" "}
               <span className="gradient-text">touch</span>.
             </h1>
@@ -49,117 +44,64 @@ export function ContactView() {
 
       <section className="mx-auto max-w-content px-6 pb-20 md:px-10 md:pb-28">
         <div className="grid gap-12 md:grid-cols-2">
-          {/* Form */}
           <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
             {submitted ? (
-              <div className="flex h-full items-center justify-center rounded-2xl border border-border bg-surface-card p-8">
+              <div className="card p-8 flex h-full items-center justify-center">
                 <div className="text-center">
                   <div className="text-4xl">✓</div>
-                  <h3 className="mt-4 text-lg font-medium">Message Sent</h3>
-                  <p className="mt-2 text-sm text-foreground-muted">
-                    Thank you for reaching out. I&apos;ll get back to you soon.
-                  </p>
+                  <h3 className="mt-4 text-lg font-medium tracking-tight" style={{ fontFeatureSettings: "'liga' 1" }}>Message Sent</h3>
+                  <p className="mt-2 text-sm text-foreground-muted">Thank you for reaching out. I&apos;ll get back to you soon.</p>
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-foreground-muted"
-                  >
-                    Name
-                  </label>
+                  <label htmlFor="name" className="block text-sm font-medium text-foreground-muted">Name</label>
                   <input
-                    type="text"
-                    id="name"
-                    required
+                    type="text" id="name" required
                     value={formState.name}
-                    onChange={(e) =>
-                      setFormState((s) => ({ ...s, name: e.target.value }))
-                    }
-                    className="mt-2 w-full rounded-xl border border-border bg-surface-card px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle transition-colors duration-[var(--duration-fast)] ease-entrance focus:border-foreground-muted focus:outline-none"
+                    onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))}
+                    className="card w-full px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:shadow-elevated"
                     placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-foreground-muted"
-                  >
-                    Email
-                  </label>
+                  <label htmlFor="email" className="block text-sm font-medium text-foreground-muted">Email</label>
                   <input
-                    type="email"
-                    id="email"
-                    required
+                    type="email" id="email" required
                     value={formState.email}
-                    onChange={(e) =>
-                      setFormState((s) => ({ ...s, email: e.target.value }))
-                    }
-                    className="mt-2 w-full rounded-xl border border-border bg-surface-card px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle transition-colors duration-[var(--duration-fast)] ease-entrance focus:border-foreground-muted focus:outline-none"
+                    onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))}
+                    className="card w-full px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:shadow-elevated"
                     placeholder="your@email.com"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-foreground-muted"
-                  >
-                    Message
-                  </label>
+                  <label htmlFor="message" className="block text-sm font-medium text-foreground-muted">Message</label>
                   <textarea
-                    id="message"
-                    required
-                    rows={5}
+                    id="message" required rows={5}
                     value={formState.message}
-                    onChange={(e) =>
-                      setFormState((s) => ({ ...s, message: e.target.value }))
-                    }
-                    className="mt-2 w-full resize-none rounded-xl border border-border bg-surface-card px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle transition-colors duration-[var(--duration-fast)] ease-entrance focus:border-foreground-muted focus:outline-none"
+                    onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))}
+                    className="card w-full px-4 py-3 text-sm text-foreground placeholder:text-foreground-subtle focus:outline-none focus:shadow-elevated resize-none"
                     placeholder="Tell me about your project..."
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="rounded-full bg-brand px-6 py-3 text-sm font-medium text-foreground-inverse transition-all duration-[var(--duration-fast)] ease-entrance hover:bg-brand-hover"
-                >
-                  Send Message
-                </button>
+                <button type="submit" className="btn-primary">Send Message</button>
               </form>
             )}
           </Inview>
 
-          {/* Info */}
-          <Inview
-            from={{ opacity: 0, y: 20 }}
-            to={{ opacity: 1, y: 0 }}
-            mode="once"
-            delayIn={150}
-          >
+          <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={150}>
             <div className="space-y-8">
               <div>
-                <h3 className="text-sm font-medium uppercase tracking-widest text-foreground-muted">
-                  Location
-                </h3>
+                <h3 className="text-sm font-medium uppercase tracking-widest text-foreground-muted">Location</h3>
                 <p className="mt-2 text-foreground">{siteConfig.location}</p>
               </div>
-
               <div>
-                <h3 className="text-sm font-medium uppercase tracking-widest text-foreground-muted">
-                  Availability
-                </h3>
-                <p className="mt-2 text-foreground">
-                  {siteConfig.available
-                    ? "Available for freelance and collaboration"
-                    : "Currently unavailable"}
-                </p>
+                <h3 className="text-sm font-medium uppercase tracking-widest text-foreground-muted">Availability</h3>
+                <p className="mt-2 text-foreground">{siteConfig.available ? "Available for freelance and collaboration" : "Currently unavailable"}</p>
               </div>
-
               <div>
-                <h3 className="text-sm font-medium uppercase tracking-widest text-foreground-muted">
-                  Connect
-                </h3>
+                <h3 className="text-sm font-medium uppercase tracking-widest text-foreground-muted">Connect</h3>
                 <div className="mt-4 space-y-3">
                   {socialLinks.map((link) => (
                     <a
@@ -167,12 +109,10 @@ export function ContactView() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center justify-between rounded-xl border border-border bg-surface-card px-4 py-3 transition-all duration-[var(--duration-fast)] ease-entrance hover:border-foreground-muted"
+                      className="card p-4 group flex items-center justify-between transition-shadow hover:shadow-elevated"
                     >
-                      <span className="text-sm font-medium">{link.name}</span>
-                      <span className="text-xs text-foreground-muted transition-colors group-hover:text-foreground">
-                        {link.handle} →
-                      </span>
+                      <span className="text-sm font-medium tracking-tight" style={{ fontFeatureSettings: "'liga' 1" }}>{link.name}</span>
+                      <span className="text-xs text-foreground-muted transition-colors group-hover:text-foreground">{link.handle} →</span>
                     </a>
                   ))}
                 </div>
