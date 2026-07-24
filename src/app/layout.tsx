@@ -8,6 +8,7 @@ import { getSiteStructuredData } from "@/utils/seo/structured-data";
 
 import { Navigation } from "@/components/ui/Navigation";
 import { Footer } from "@/components/ui/Footer";
+import { CursorGlow } from "@/components/ui/CursorGlow";
 import { LazyCookie } from "@/components/common/Cookie";
 import { AdaptiveGrid } from "@/components/common/grid";
 import { ReducedMotion } from "@/components/common/reduced-motion";
@@ -36,6 +37,7 @@ export default function RootLayout({
           <AdaptiveGrid />
           <ReducedMotion />
           <Navigation />
+          <CursorGlow />
           <main id="main-content">{children}</main>
           <Footer />
           <LazyCookie />

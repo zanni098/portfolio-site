@@ -70,9 +70,9 @@ const titleSpring = { tension: 120, friction: 20 };
 
 export function HomeView() {
   const scrollIndicator = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    delay: 2000,
+    from: { opacity: 0, y: 10 },
+    to: { opacity: 1, y: 0 },
+    delay: 2200,
     config: { tension: 80, friction: 30 },
   });
 
@@ -80,39 +80,41 @@ export function HomeView() {
     <>
       {/* ──────── HERO ──────── */}
       <VideoHero videoSrc="/assets/hero/flower-arc.mp4" posterSrc="/assets/hero/flower-arc.jpg">
-        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" config={titleSpring}>
-          <p className="mb-4 text-sm font-medium text-foreground-muted" style={{ letterSpacing: "-0.01em" }}>
-            Full-Stack AI Engineer
-          </p>
-        </Inview>
+        <div className="max-w-3xl mx-auto">
+          <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once" config={titleSpring}>
+            <p className="mb-5 text-sm font-medium text-foreground-muted tracking-[0.15em] uppercase">
+              Full-Stack AI Engineer
+            </p>
+          </Inview>
 
-        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={200} config={titleSpring}>
-          <h1
-            className="text-5xl font-medium leading-display tracking-display md:text-7xl lg:text-8xl"
-            style={{ fontFeatureSettings: "'liga' 1" }}
-          >
-            Asad{" "}
-            <span className="gradient-text">Jehan Zeb</span>
-          </h1>
-        </Inview>
+          <Inview from={{ opacity: 0, y: 25 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={200} config={titleSpring}>
+            <h1
+              className="text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl"
+              style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.04em" }}
+            >
+              <span className="text-foreground">Asad</span>{" "}
+              <span className="gradient-text">Jehan Zeb</span>
+            </h1>
+          </Inview>
 
-        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={400} config={titleSpring}>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
-            Building agentic AI tooling, contributing to open source at scale,
-            and exploring generative filmmaking. Founder of Symbiothus.
-          </p>
-        </Inview>
+          <Inview from={{ opacity: 0, y: 25 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={400} config={titleSpring}>
+            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-foreground-muted md:text-lg">
+              Building agentic AI tooling, contributing to open source at scale,
+              and exploring generative filmmaking. Founder of Symbiothus.
+            </p>
+          </Inview>
 
-        <Inview from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={600} config={titleSpring}>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link href="/projects" className="btn-primary">
-              View Projects
-            </Link>
-            <Link href="/contact" className="btn-ghost">
-              Get in Touch
-            </Link>
-          </div>
-        </Inview>
+          <Inview from={{ opacity: 0, y: 25 }} to={{ opacity: 1, y: 0 }} mode="once" delayIn={600} config={titleSpring}>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <Link href="/projects" className="btn-primary text-sm px-6 py-3">
+                View Projects
+              </Link>
+              <Link href="/contact" className="btn-ghost text-sm px-6 py-3">
+                Get in Touch
+              </Link>
+            </div>
+          </Inview>
+        </div>
       </VideoHero>
 
       {/* Scroll indicator */}
@@ -120,18 +122,18 @@ export function HomeView() {
         style={scrollIndicator}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
       >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-xs font-medium text-foreground-muted uppercase tracking-widest">
+        <div className="flex flex-col items-center gap-2.5">
+          <span className="text-[10px] font-medium text-foreground-muted uppercase tracking-[0.2em]">
             Scroll
           </span>
-          <div className="h-8 w-px bg-gradient-to-b from-foreground-muted to-transparent" />
+          <div className="h-8 w-px bg-gradient-to-b from-foreground-muted/50 to-transparent" />
         </div>
       </animated.div>
 
       {/* ──────── STATS ──────── */}
-      <section className="shadow-border">
-        <div className="mx-auto max-w-content px-6 py-16 md:px-10 md:py-20">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+      <section className="border-b border-border-subtle">
+        <div className="mx-auto max-w-content px-6 py-20 md:px-10 md:py-24">
+          <div className="grid grid-cols-2 gap-12 md:grid-cols-4">
             {stats.map((stat, i) => (
               <Inview
                 key={stat.label}
@@ -143,15 +145,15 @@ export function HomeView() {
               >
                 <div className="text-center">
                   <div
-                    className="text-3xl font-medium tracking-display md:text-4xl"
-                    style={{ fontFeatureSettings: "'liga' 1" }}
+                    className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl"
+                    style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.03em" }}
                   >
                     <AnimatedCounter
                       target={parseInt(stat.value.replace(/[^0-9]/g, ""))}
                       suffix={stat.value.replace(/[0-9]/g, "")}
                     />
                   </div>
-                  <div className="mt-1 text-xs font-medium uppercase tracking-widest text-foreground-muted">
+                  <div className="mt-2 text-xs font-medium uppercase tracking-[0.15em] text-foreground-muted">
                     {stat.label}
                   </div>
                 </div>
@@ -162,18 +164,23 @@ export function HomeView() {
       </section>
 
       {/* ──────── FEATURED PROJECTS ──────── */}
-      <section className="mx-auto max-w-content px-6 py-20 md:px-10 md:py-28">
+      <section className="mx-auto max-w-content px-6 py-24 md:px-10 md:py-32">
         <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
-          <h2
-            className="text-3xl font-medium tracking-heading md:text-4xl"
-            style={{ fontFeatureSettings: "'liga' 1" }}
-          >
-            Featured Work
-          </h2>
-          <p className="mt-3 max-w-xl text-foreground-muted">
-            Selected projects from a portfolio spanning AI agent tooling, developer
-            infrastructure, fintech, and consumer apps.
-          </p>
+          <div className="max-w-xl">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand mb-4">
+              Selected Work
+            </p>
+            <h2
+              className="text-3xl font-semibold tracking-tight md:text-4xl"
+              style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.03em" }}
+            >
+              Featured Projects
+            </h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              Selected projects from a portfolio spanning AI agent tooling, developer
+              infrastructure, fintech, and consumer apps.
+            </p>
+          </div>
         </Inview>
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -186,42 +193,45 @@ export function HomeView() {
               delayIn={i * 150}
               config={{ tension: 100, friction: 20 }}
             >
-              <div className="card p-6 group">
-                <div className="mb-4 flex items-center gap-2">
-                  <div className="h-2 w-2 rounded-full bg-brand" />
-                  <h3
-                    className="text-lg font-medium tracking-tight"
-                    style={{ fontFeatureSettings: "'liga' 1" }}
-                  >
-                    {project.title}
-                  </h3>
+              <div className="card p-6 group h-full flex flex-col">
+                <div className="mb-3">
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className="h-2 w-2 rounded-full bg-brand" />
+                    <h3
+                      className="text-lg font-semibold tracking-tight"
+                      style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.02em" }}
+                    >
+                      {project.title}
+                    </h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-foreground-muted">
+                    {project.description}
+                  </p>
                 </div>
-                <p className="flex-1 text-sm leading-relaxed text-foreground-muted">
-                  {project.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span key={t} className="pill">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-4 flex items-center gap-4">
-                  <Link
-                    href={project.href}
-                    className="text-sm font-medium text-brand transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-brand-hover"
-                    style={{ fontFeatureSettings: "'liga' 1" }}
-                  >
-                    Learn More
-                  </Link>
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-foreground-muted transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-foreground"
-                  >
-                    GitHub →
-                  </a>
+                <div className="mt-auto">
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {project.tech.map((t) => (
+                      <span key={t} className="pill text-[11px]">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-5 pt-2 border-t border-border-subtle">
+                    <Link
+                      href={project.href}
+                      className="text-sm font-medium text-brand transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-brand-hover"
+                    >
+                      Learn More →
+                    </Link>
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-foreground-muted transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-foreground"
+                    >
+                      GitHub
+                    </a>
+                  </div>
                 </div>
               </div>
             </Inview>
@@ -230,30 +240,32 @@ export function HomeView() {
       </section>
 
       {/* ──────── OPEN SOURCE CTA ──────── */}
-      <section className="shadow-border">
-        <div className="mx-auto max-w-content px-6 py-20 md:px-10 md:py-28">
-          <div className="mx-auto max-w-narrow text-center">
+      <section className="border-t border-border-subtle">
+        <div className="mx-auto max-w-content px-6 py-24 md:px-10 md:py-32">
+          <div className="mx-auto max-w-2xl text-center">
             <Inview from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0 }} mode="once">
-              <p className="mb-4 text-sm font-medium text-brand" style={{ letterSpacing: "-0.01em" }}>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand mb-4">
                 Open Source
               </p>
               <h2
-                className="text-3xl font-medium tracking-heading md:text-4xl"
-                style={{ fontFeatureSettings: "'liga' 1" }}
+                className="text-3xl font-semibold tracking-tight md:text-4xl"
+                style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.03em" }}
               >
-                Merged into projects with{" "}
-                <span className="gradient-text">425K+ combined stars</span>
+                Contributing to projects with{" "}
+                <span className="gradient-text">425K+</span> combined stars
               </h2>
-              <p className="mt-4 text-foreground-muted">
+              <p className="mt-5 text-foreground-muted leading-relaxed max-w-lg mx-auto">
                 Active contributor to promptfoo, OpenClaw, and OpenClaude.
                 Author of DuckTap, BirdEye, and Anomalithic.
               </p>
-              <Link
-                href="/opensource"
-                className="btn-ghost mt-8 inline-flex"
-              >
-                View Contributions →
-              </Link>
+              <div className="mt-10">
+                <Link
+                  href="/opensource"
+                  className="btn-ghost text-sm px-6 py-3"
+                >
+                  View Contributions →
+                </Link>
+              </div>
             </Inview>
           </div>
         </div>
