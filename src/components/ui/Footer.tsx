@@ -1,89 +1,73 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 
-const footerLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/opensource", label: "Open Source" },
-  { href: "/experience", label: "Experience" },
-  { href: "/contact", label: "Contact" },
-];
-
 const socialLinks = [
   { href: siteConfig.social.github, label: "GitHub", handle: "zanni098" },
   { href: siteConfig.social.linkedin, label: "LinkedIn", handle: "asad-jehan-zeb" },
   { href: siteConfig.social.contra, label: "Contra", handle: "Zucchhini" },
   { href: siteConfig.social.medium, label: "Medium", handle: "zuhaibkhann098" },
   { href: siteConfig.social.youtube, label: "YouTube", handle: "TheBoringStudio" },
-];
+] as const;
 
+/**
+ * Ft5 · Statement — closes the page with a sentence.
+ *
+ * Replaces the outgoing three-column link index + centred copyright, which is
+ * the most recognisable AI-footer fingerprint. Route discovery now lives in the
+ * grouped header nav, so repeating it here earned nothing.
+ */
 export function Footer() {
   return (
-    <footer className="border-t border-border">
-      <div className="mx-auto max-w-content px-6 py-16 md:px-10">
-        <div className="grid gap-12 md:grid-cols-3">
-          {/* Brand */}
-          <div>
-            <Link
-              href="/"
-              className="text-lg font-medium tracking-tight text-foreground"
-              style={{ fontFeatureSettings: "'liga' 1", letterSpacing: "-0.03em" }}
-            >
-              asad<span className="text-brand">.</span>
-            </Link>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-foreground-muted">
-              Full-stack AI engineer building agentic tooling, contributing to
-              open source, and exploring generative AI filmmaking. Founder of
-              Symbiothus.
-            </p>
-          </div>
+    <footer className="blueprint border-t border-border">
+      <div className="mx-auto max-w-content px-[var(--page-gutter)] py-24 md:py-32">
+        <p className="eyebrow mb-6">
+          <span className="eyebrow-ord">05</span> · Colophon
+        </p>
 
-          {/* Navigation */}
-          <div>
-            <h3 className="mb-4 text-xs font-medium uppercase tracking-widest text-foreground-muted">
-              Navigation
-            </h3>
-            <div className="flex flex-col gap-2">
-              {footerLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-foreground-muted transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-foreground"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
+        <p className="display max-w-[18ch] text-[length:var(--text-display-s)]">
+          Agent tooling, <span className="verb">built</span> in the open.
+        </p>
 
-          {/* Social */}
-          <div>
-            <h3 className="mb-4 text-xs font-medium uppercase tracking-widest text-foreground-muted">
-              Connect
-            </h3>
-            <div className="flex flex-col gap-2">
-              {socialLinks.map((link) => (
+        <p className="mt-8 max-w-md text-base leading-relaxed text-foreground-muted">
+          Founder of Symbiothus. Writing agent runtimes and developer tooling
+          from {siteConfig.location}, and publishing most of it.
+        </p>
+
+        {siteConfig.available && (
+          <p className="mt-8 flex items-center gap-2.5">
+            <span
+              aria-hidden="true"
+              className="h-1.5 w-1.5 rounded-full bg-brand"
+            />
+            <span className="eyebrow">Available for work</span>
+          </p>
+        )}
+
+        <div className="mt-10">
+          <Link href="/contact" className="btn-primary">
+            Start a conversation
+          </Link>
+        </div>
+
+        <div className="mt-20 flex flex-col gap-6 border-t border-border-subtle pt-8 md:flex-row md:items-center md:justify-between">
+          <ul className="flex flex-wrap gap-x-6 gap-y-3">
+            {socialLinks.map((link) => (
+              <li key={link.label}>
                 <a
-                  key={link.label}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 text-sm text-foreground-muted transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-foreground"
+                  className="eyebrow whitespace-nowrap transition-colors duration-[var(--duration-fast)] ease-entrance hover:text-foreground"
                 >
-                  <span>{link.label}</span>
-                  <span className="text-xs text-foreground-subtle transition-colors group-hover:text-foreground-muted">
-                    /{link.handle}
-                  </span>
+                  {link.label}
                 </a>
-              ))}
-            </div>
-          </div>
-        </div>
+              </li>
+            ))}
+          </ul>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-xs text-foreground-muted md:flex-row">
-          <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-          <p>Built with Next.js, TypeScript, and Tailwind CSS</p>
+          <p className="eyebrow whitespace-nowrap">
+            © {new Date().getFullYear()} {siteConfig.name}
+          </p>
         </div>
       </div>
     </footer>

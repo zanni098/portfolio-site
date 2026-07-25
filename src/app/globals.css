@@ -1,83 +1,101 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap');
+/* Hallmark · genre: atmospheric · macrostructure: Marquee Hero · theme: Lumen (Night Foundry)
+ * enrichment: none — the 4K footage is the focal object · nav: N9 edge-aligned · footer: Ft5 statement
+ * design-system: design.md · designed-as-app
+ * paper oklch(14% 0.012 265) · accent oklch(78% 0.145 75) · display Instrument Serif (roman)
+ * axes: dark paper / classical-serif display / warm accent
+ * pre-emit critique: P5 H5 E4 S5 R4 V5
+ */
+
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   LIGHT-MODE-FIRST DESIGN SYSTEM
-   Typography: Geist Sans + Geist Mono
-   Accent: Green
+   NIGHT FOUNDRY — DARK-FIRST DESIGN SYSTEM
+   Typography: Instrument Serif (display) · Instrument Sans (body) · JetBrains Mono (labels)
+   Accent: amber, lifted from the gold shaft in sea-storm.mp4
+   Fonts are injected by next/font in src/app/layout.tsx — never re-add a
+   fonts.googleapis.com @import here.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── TIER 1 — PRIMITIVES ── */
 :root {
-  --raw-color-white: #ffffff;
-  --raw-color-black: #000000;
-  --raw-color-near-black: #0a0a0a;
+  /* Canvas — cool-violet near-black, hue 265 */
+  --raw-paper-950: oklch(11% 0.010 265);
+  --raw-paper-900: oklch(14% 0.012 265);
+  --raw-paper-800: oklch(18% 0.014 265);
+  --raw-paper-700: oklch(22% 0.014 265);
+  --raw-paper-600: oklch(27% 0.014 265);
 
-  --raw-gray-50: #fafafa;
-  --raw-gray-100: #f5f5f5;
-  --raw-gray-200: #e5e5e5;
-  --raw-gray-300: #d4d4d4;
-  --raw-gray-400: #a3a3a3;
-  --raw-gray-500: #737373;
-  --raw-gray-600: #525252;
-  --raw-gray-700: #404040;
-  --raw-gray-800: #262626;
-  --raw-gray-900: #171717;
-  --raw-gray-950: #0a0a0a;
+  --raw-ink-50: oklch(96% 0.004 265);
+  --raw-ink-200: oklch(86% 0.006 265);
+  --raw-ink-300: oklch(78% 0.008 265);
+  --raw-ink-400: oklch(62% 0.010 265);
+  --raw-ink-500: oklch(48% 0.010 265);
 
-  /* Green accent palette */
-  --raw-green-50: #f0fdf4;
-  --raw-green-100: #dcfce7;
-  --raw-green-200: #bbf7d0;
-  --raw-green-300: #86efac;
-  --raw-green-400: #4ade80;
-  --raw-green-500: #22c55e;
-  --raw-green-600: #16a34a;
-  --raw-green-700: #15803d;
-  --raw-green-800: #166534;
-  --raw-green-900: #14532d;
+  /* Amber — the emitting accent */
+  --raw-amber-300: oklch(88% 0.100 75);
+  --raw-amber-400: oklch(83% 0.130 75);
+  --raw-amber-500: oklch(78% 0.145 75);
+  --raw-amber-600: oklch(70% 0.140 70);
+  --raw-amber-700: oklch(58% 0.120 68);
 
-  /* Durations */
+  /* Coral chord — verb landmark only, never decorative */
+  --raw-coral-500: oklch(68% 0.160 18);
+
   --raw-duration-fast: 150ms;
   --raw-duration-normal: 250ms;
   --raw-duration-slow: 500ms;
 }
 
-/* ── TIER 2 — SEMANTIC TOKENS (Light-Mode-First) ── */
+/* ── TIER 2 — SEMANTIC TOKENS ──
+   Names are preserved verbatim from the outgoing light system so every page
+   that has not yet been rebuilt inherits the dark theme instead of breaking. */
 :root {
-  --background: var(--raw-color-white);
-  --background-alt: var(--raw-gray-50);
-  --background-elevated: var(--raw-color-white);
-  --background-hover: var(--raw-gray-100);
-  --background-muted: var(--raw-gray-100);
+  --background: var(--raw-paper-900);
+  --background-alt: var(--raw-paper-950);
+  --background-elevated: var(--raw-paper-800);
+  --background-hover: var(--raw-paper-700);
+  --background-muted: var(--raw-paper-800);
 
-  --foreground: var(--raw-color-near-black);
-  --foreground-secondary: var(--raw-gray-600);
-  --foreground-muted: var(--raw-gray-500);
-  --foreground-subtle: var(--raw-gray-400);
-  --foreground-inverse: var(--raw-color-white);
+  --foreground: var(--raw-ink-50);
+  --foreground-secondary: var(--raw-ink-200);
+  --foreground-muted: var(--raw-ink-300);
+  --foreground-subtle: var(--raw-ink-400);
+  --foreground-inverse: var(--raw-paper-950);
 
-  --brand: var(--raw-green-500);
-  --brand-hover: var(--raw-green-600);
-  --brand-light: var(--raw-green-50);
-  --brand-dark: var(--raw-green-700);
+  --brand: var(--raw-amber-500);
+  --brand-hover: var(--raw-amber-400);
+  --brand-light: oklch(78% 0.145 75 / 0.12);
+  --brand-dark: var(--raw-amber-300);
 
-  --border: var(--raw-gray-200);
-  --border-subtle: var(--raw-gray-100);
-  --border-strong: var(--raw-gray-300);
+  --accent-verb: var(--raw-coral-500);
 
-  --surface-card: var(--raw-color-white);
-  --surface-card-hover: var(--raw-gray-50);
+  --border: oklch(96% 0.004 265 / 0.11);
+  --border-subtle: oklch(96% 0.004 265 / 0.06);
+  --border-strong: oklch(96% 0.004 265 / 0.18);
 
-  --shadow-border: 0px 0px 0px 1px var(--raw-gray-200);
-  --shadow-border-subtle: 0px 0px 0px 1px var(--raw-gray-100);
-  --shadow-elevated: 0px 0px 0px 1px var(--raw-gray-200), 0px 4px 12px rgba(0, 0, 0, 0.08);
+  --surface-card: oklch(18% 0.014 265 / 0.7);
+  --surface-card-hover: oklch(22% 0.014 265 / 0.85);
+
+  --glow: oklch(80% 0.150 75 / 0.34);
+  --card-emit: oklch(78% 0.145 75 / 0.05);
+  --card-emit-hover: oklch(78% 0.145 75 / 0.11);
+  --rule-blueprint: oklch(96% 0.004 265 / 0.04);
+
+  --shadow-border: 0 0 0 1px var(--border);
+  --shadow-border-subtle: 0 0 0 1px var(--border-subtle);
+  --shadow-elevated: 0 0 0 1px var(--border), 0 24px 60px -28px oklch(0% 0 0 / 0.65);
 
   --duration-fast: var(--raw-duration-fast);
   --duration-normal: var(--raw-duration-normal);
   --duration-slow: var(--raw-duration-slow);
 
   --font-features: "liga" 1;
+  --tracking-micro: 0.10em;
+  --page-gutter: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  :root { --page-gutter: 2.5rem; }
 }
 
 /* ── THEME BINDINGS ── */
@@ -96,18 +114,27 @@
   --color-brand-hover: var(--brand-hover);
   --color-brand-light: var(--brand-light);
   --color-brand-dark: var(--brand-dark);
+  --color-accent-verb: var(--accent-verb);
   --color-border: var(--border);
   --color-border-subtle: var(--border-subtle);
   --color-border-strong: var(--border-strong);
   --color-surface-card: var(--surface-card);
   --color-surface-card-hover: var(--surface-card-hover);
 
-  --font-sans: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
+  /* next/font exposes these three CSS variables from layout.tsx */
+  --font-display: var(--font-instrument-serif), "Tiempos Headline", ui-serif, Georgia, serif;
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 
-  --leading-display: 1.05;
-  --leading-relaxed: 1.6;
+  /* Fluid type scale — clamp on the token, never on the root font-size */
+  --text-display: clamp(2.75rem, 7vw + 0.5rem, 6.5rem);
+  --text-display-s: clamp(2.25rem, 4.5vw + 0.5rem, 4rem);
+  --text-heading: clamp(1.75rem, 2.2vw + 0.75rem, 2.75rem);
+  --text-stat: clamp(2.25rem, 3.5vw + 0.5rem, 3.75rem);
+
+  --leading-display: 1.02;
   --leading-tight: 1.2;
+  --leading-relaxed: 1.6;
 
   --ease-entrance: cubic-bezier(0.2, 0, 0, 1);
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
@@ -124,34 +151,34 @@
 /* ── BASE LAYER ── */
 @layer base {
   html {
+    /* Fixed root. The outgoing viewport-relative root made type shrink as the
+       window grew and discarded the reader's own font-size preference
+       (WCAG 1.4.4). All fluid sizing lives in clamp() on the tokens above. */
     font-size: 16px;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  @media (max-width: 1920px) {
-    html { font-size: 0.833333vw; }
-  }
-  @media (max-width: 1440px) {
-    html { font-size: 1.111111vw; }
-  }
-  @media (max-width: 1024px) {
-    html { font-size: 1.5625vw; }
-  }
-  @media (max-width: 640px) {
-    html { font-size: 4.444444vw; }
+    color-scheme: dark;
+    overflow-x: clip;
   }
 
   * { box-sizing: border-box; }
 
   body {
     background: var(--background);
-    color: var(--foreground);
+    color: var(--foreground-muted);
     font-family: var(--font-sans);
     font-feature-settings: var(--font-features);
+    font-variant-numeric: tabular-nums;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4 {
+    color: var(--foreground);
+    font-style: normal;
+    overflow-wrap: anywhere;
+    min-width: 0;
   }
 
   ::selection {
@@ -161,6 +188,12 @@
 
   a { color: inherit; text-decoration: none; }
   img, video { max-width: 100%; height: auto; }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    /* never animated — the ring must appear instantly */
+  }
 }
 
 /* ── UTILITIES ── */
@@ -174,87 +207,155 @@
   .shadow-border-subtle { box-shadow: var(--shadow-border-subtle); }
   .shadow-elevated { box-shadow: var(--shadow-elevated); }
 
-  .tracking-display { letter-spacing: -0.05em; }
-  .tracking-display-lg { letter-spacing: -0.06em; }
-  .tracking-heading { letter-spacing: -0.03em; }
-  .tracking-tight { letter-spacing: -0.02em; }
+  .tracking-display { letter-spacing: -0.032em; }
+  .tracking-display-lg { letter-spacing: -0.04em; }
+  .tracking-heading { letter-spacing: -0.025em; }
+  .tracking-tight { letter-spacing: -0.015em; }
+
+  /* Blueprint grid — the "engineered, not vibed" ground for filmless sections */
+  .blueprint {
+    background:
+      linear-gradient(var(--rule-blueprint) 1px, transparent 1px) 0 0 / 48px 48px,
+      linear-gradient(90deg, var(--rule-blueprint) 1px, transparent 1px) 0 0 / 48px 48px,
+      var(--background);
+  }
 }
 
 /* ── COMPONENTS ── */
 @layer components {
+  /* Display face — Instrument Serif, roman, always */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: normal;
+    line-height: var(--leading-display);
+    letter-spacing: -0.032em;
+    color: var(--foreground);
+  }
+
+  /* Mono UPPERCASE label — the only uppercase surface on the site */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: var(--tracking-micro);
+    text-transform: uppercase;
+    color: var(--foreground-subtle);
+  }
+  .eyebrow-ord { color: var(--brand); }
+
+  /* Verb landmark — colour + drawn rule, never italic (Lumen signature 2) */
+  .verb {
+    font-style: normal;
+    color: var(--accent-verb);
+    position: relative;
+    white-space: nowrap;
+  }
+  .verb::after {
+    content: "";
+    position: absolute;
+    left: 0.04em; right: 0.04em; bottom: 0.06em;
+    height: 1px;
+    background: var(--accent-verb);
+  }
+
+  .btn-primary,
   .btn-ghost {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 1rem;
+    white-space: nowrap;
+    padding: 0.625rem 1.25rem;
     font-size: 0.875rem;
     font-weight: 500;
     font-family: var(--font-sans);
     font-feature-settings: var(--font-features);
     border-radius: var(--radius-button);
-    background: transparent;
-    color: var(--foreground);
-    box-shadow: var(--shadow-border);
-    transition: background var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
     cursor: pointer;
-  }
-  .btn-ghost:hover {
-    background: var(--background-hover);
-    box-shadow: var(--shadow-border), 0px 0px 0px 1px var(--raw-gray-300);
+    transition:
+      background var(--duration-fast) var(--ease-entrance),
+      box-shadow var(--duration-fast) var(--ease-entrance),
+      color var(--duration-fast) var(--ease-entrance);
   }
 
   .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1.25rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    font-family: var(--font-sans);
-    font-feature-settings: var(--font-features);
-    border-radius: var(--radius-button);
     background: var(--brand);
     color: var(--foreground-inverse);
-    transition: background var(--duration-fast) ease;
-    cursor: pointer;
   }
   .btn-primary:hover { background: var(--brand-hover); }
+  .btn-primary:active { background: var(--raw-amber-600); }
+  .btn-primary:disabled { background: var(--raw-paper-700); color: var(--foreground-subtle); cursor: not-allowed; }
 
+  .btn-ghost {
+    background: transparent;
+    color: var(--foreground);
+    box-shadow: var(--shadow-border);
+  }
+  .btn-ghost:hover {
+    background: var(--background-hover);
+    box-shadow: 0 0 0 1px var(--border-strong);
+  }
+  .btn-ghost:active { background: var(--raw-paper-600); }
+  .btn-ghost:disabled { color: var(--foreground-subtle); cursor: not-allowed; }
+
+  /* Hairline card, lit from within — never drop-shadowed (Lumen signature 6) */
   .card {
-    background: var(--surface-card);
+    position: relative;
+    background:
+      radial-gradient(120% 100% at 50% 0%, var(--card-emit) 0%, transparent 62%),
+      var(--surface-card);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-border);
-    transition: box-shadow var(--duration-normal) ease, background var(--duration-normal) ease;
+    transition:
+      background var(--duration-normal) var(--ease-entrance),
+      box-shadow var(--duration-normal) var(--ease-entrance),
+      transform var(--duration-normal) var(--ease-entrance);
   }
   .card:hover {
-    box-shadow: var(--shadow-elevated);
-    background: var(--surface-card-hover);
+    background:
+      radial-gradient(120% 100% at 50% 0%, var(--card-emit-hover) 0%, transparent 62%),
+      var(--surface-card-hover);
+    box-shadow: 0 0 0 1px var(--border-strong);
+    transform: translateY(-3px);
   }
 
+  /* Mono tech tag */
   .pill {
     display: inline-flex;
     align-items: center;
-    padding: 0.125rem 0.625rem;
-    font-size: 0.75rem;
+    padding: 0.1875rem 0.5rem;
+    font-size: 0.6875rem;
     font-weight: 500;
-    font-family: var(--font-sans);
-    font-feature-settings: var(--font-features);
-    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    letter-spacing: var(--tracking-micro);
+    text-transform: uppercase;
+    border-radius: var(--radius-button);
     background: var(--brand-light);
     color: var(--brand-dark);
   }
 
+  /* Retained so untouched pages keep rendering. Glassmorphism is banned in this
+     register — this is now a plain elevated surface with a hairline. */
   .glass {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--background-elevated);
     box-shadow: var(--shadow-border);
   }
 
+  /* Retained for the 10 call sites on pages not yet rebuilt. Gradient text is a
+     top AI tell — redefined as solid accent so it disappears site-wide at once. */
   .gradient-text {
-    background: linear-gradient(135deg, var(--brand), var(--raw-green-300));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--brand);
+    -webkit-text-fill-color: currentColor;
   }
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .card:hover { transform: none; }
 }
