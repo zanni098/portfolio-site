@@ -57,6 +57,44 @@ Night Foundry. Cool-violet near-black canvas, amber accent that emits.
 eyebrow ordinals, hairline card emission, and one CTA fill. Never on display
 text — headlines are ink, full stop.
 
+### Day Foundry (light drop)
+
+Applied via `:root[data-theme="light"]`. Same amber identity, darkened so it
+carries contrast on a light canvas — this is one brand in two lights, not two
+brands.
+
+- `--color-paper`  `oklch(97% 0.006 265)` — cool bone, violet pull
+- `--color-ink`    `oklch(20% 0.014 265)`
+- `--color-accent` `oklch(52% 0.125 62)` — amber, darkened for legibility
+- `--color-verb`   `oklch(52% 0.180 22)`
+
+Measured in-browser at 1440px, all against their real composited backgrounds:
+body 7.09 · headings 16.58 · mono eyebrow 5.04 · amber link 5.24 · tech tag
+8.16 · primary button 5.57 · verb landmark 5.56. All pass WCAG AA.
+
+**Theme resolution order:** stored choice → an explicit OS light preference →
+dark. Dark is the designed default because the heroes are dark footage. The
+`<html data-theme>` attribute is stamped by an inline script in `layout.tsx`
+before first paint, so there is no flash; `ThemeToggle` only mirrors and
+mutates it and never decides the theme on mount.
+
+### `.on-film` — content over the footage
+
+The three hero loops are dark in **both** themes, so anything sitting on them
+keeps the dark drop's foreground values. `.on-film` scopes that: it is applied
+to the `VideoHero` content wrapper, and to the header while it is unscrolled.
+Without it, light mode would put near-black type on near-black video.
+
+Two rules when extending it:
+
+1. Utilities resolve `var(--foreground)` from the nearest ancestor, so
+   redeclaring the tier-2 tokens inside `.on-film` is enough for colour.
+2. **Composed properties must be redeclared, not just their inputs.** A custom
+   property's `var()` references are substituted on the element that *declares*
+   it. `--shadow-border` is composed on `:root` as `0 0 0 1px var(--border)`, so
+   overriding `--border` inside `.on-film` does not reach it — `--shadow-border`
+   itself has to be restated. Same for `--shadow-elevated`.
+
 ## Typography
 
 Three families, loaded through `next/font/google` — self-hosted, no CDN

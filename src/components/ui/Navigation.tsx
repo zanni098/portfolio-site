@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { animated, useSpring } from "@react-spring/web";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 interface NavChild {
   href: string;
@@ -90,17 +91,6 @@ export function Navigation() {
     };
   }, []);
 
-  // Solid paper on scroll — no backdrop blur; glassmorphism is out of register.
-  const barSpring = useSpring({
-    backgroundColor: scrolled
-      ? "oklch(11% 0.010 265 / 0.94)"
-      : "oklch(11% 0.010 265 / 0)",
-    boxShadow: scrolled
-      ? "0 1px 0 0 oklch(96% 0.004 265 / 0.11)"
-      : "0 1px 0 0 oklch(96% 0.004 265 / 0)",
-    config: { tension: 280, friction: 32 },
-  });
-
   const mobileSpring = useSpring({
     opacity: mobileOpen ? 1 : 0,
     config: { tension: 300, friction: 30 },
@@ -110,11 +100,18 @@ export function Navigation() {
     setOpenGroup((current) => (current === label ? null : label));
   }, []);
 
+  /**
+   * At the top of every page the bar floats over the hero footage, which is
+   * dark in both themes — so it keeps the dark drop's foreground tokens until
+   * it gains a paper background on scroll (or the mobile sheet opens).
+   */
+  const onFilm = !scrolled && !mobileOpen;
+
   return (
-    <animated.header
+    <header
       ref={headerRef}
-      style={barSpring}
-      className="fixed inset-x-0 top-0 z-50"
+      data-scrolled={scrolled}
+      className={`nav-bar fixed inset-x-0 top-0 z-50 ${onFilm ? "on-film" : ""}`}
     >
       {/* N9 · edge-aligned — wordmark hard left, links hard right, no container */}
       <nav
@@ -206,11 +203,16 @@ export function Navigation() {
             );
           })}
 
-          <Link href="/contact" className="btn-primary ml-3">
-            Get in touch
-          </Link>
+          <span className="ml-3 flex items-center gap-2">
+            <ThemeToggle />
+            <Link href="/contact" className="btn-primary">
+              Get in touch
+            </Link>
+          </span>
         </div>
 
+        <span className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
         <button
           type="button"
           onClick={() => setMobileOpen((open) => !open)}
@@ -237,6 +239,7 @@ export function Navigation() {
             />
           </span>
         </button>
+        </span>
       </nav>
 
       <animated.div
@@ -287,6 +290,6 @@ export function Navigation() {
           Get in touch
         </Link>
       </animated.div>
-    </animated.header>
+    </header>
   );
 }

@@ -116,7 +116,7 @@ export function VideoHero({
         className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-border-strong"
       />
 
-      <div className="relative z-10 w-full px-[var(--page-gutter)] pb-20 md:pb-28">
+      <div className="on-film relative z-10 w-full px-[var(--page-gutter)] pb-20 md:pb-28">
         <div
           className={`mx-auto flex w-full max-w-content flex-col ${ALIGN_CLASS[align]}`}
         >

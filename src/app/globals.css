@@ -98,6 +98,47 @@
   :root { --page-gutter: 2.5rem; }
 }
 
+/* ── TIER 2b — DAY FOUNDRY (light drop) ──
+   Same amber identity, darkened so it carries contrast on a light canvas.
+   Applied by the no-flash script in layout.tsx, which stamps data-theme on
+   <html> before first paint. */
+:root[data-theme="light"] {
+  --background: oklch(97% 0.006 265);
+  --background-alt: oklch(99% 0.003 265);
+  --background-elevated: oklch(100% 0 0);
+  --background-hover: oklch(94% 0.006 265);
+  --background-muted: oklch(95% 0.006 265);
+
+  --foreground: oklch(20% 0.014 265);
+  --foreground-secondary: oklch(34% 0.012 265);
+  --foreground-muted: oklch(44% 0.012 265);
+  --foreground-subtle: oklch(52% 0.010 265);
+  --foreground-inverse: oklch(99% 0.002 265);
+
+  --brand: oklch(52% 0.125 62);
+  --brand-hover: oklch(45% 0.115 60);
+  --brand-light: oklch(52% 0.125 62 / 0.10);
+  --brand-dark: oklch(38% 0.095 58);
+
+  --accent-verb: oklch(52% 0.180 22);
+
+  --border: oklch(20% 0.014 265 / 0.14);
+  --border-subtle: oklch(20% 0.014 265 / 0.08);
+  --border-strong: oklch(20% 0.014 265 / 0.24);
+
+  --surface-card: oklch(100% 0 0);
+  --surface-card-hover: oklch(99% 0.003 265);
+
+  --glow: oklch(52% 0.125 62 / 0.16);
+  --card-emit: oklch(52% 0.125 62 / 0.035);
+  --card-emit-hover: oklch(52% 0.125 62 / 0.08);
+  --rule-blueprint: oklch(20% 0.014 265 / 0.05);
+
+  --shadow-elevated:
+    0 0 0 1px var(--border),
+    0 18px 40px -24px oklch(20% 0.014 265 / 0.28);
+}
+
 /* ── THEME BINDINGS ── */
 @theme inline {
   --color-background: var(--background);
@@ -158,9 +199,13 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color-scheme: dark;
     overflow-x: clip;
   }
+
+  /* The inline no-flash script also sets style.colorScheme; these are the
+     declarative fallback if scripting is unavailable. */
+  :root { color-scheme: dark; }
+  :root[data-theme="light"] { color-scheme: light; }
 
   * { box-sizing: border-box; }
 
@@ -223,6 +268,51 @@
 
 /* ── COMPONENTS ── */
 @layer components {
+  /* Content sitting on top of the hero footage.
+     The films are dark in every theme, so anything over them keeps the dark
+     drop's foreground values — otherwise light mode would put near-black type
+     on near-black video. Redeclaring the tier-2 tokens here works because the
+     @theme bindings below are `inline`, so utilities compile to
+     `color: var(--foreground)` and pick up the nearest ancestor value. */
+  .on-film {
+    --foreground: oklch(96% 0.004 265);
+    --foreground-secondary: oklch(86% 0.006 265);
+    --foreground-muted: oklch(78% 0.008 265);
+    --foreground-subtle: oklch(66% 0.010 265);
+    --foreground-inverse: oklch(11% 0.010 265);
+    --brand: oklch(78% 0.145 75);
+    --brand-hover: oklch(83% 0.130 75);
+    --border: oklch(96% 0.004 265 / 0.16);
+    --border-subtle: oklch(96% 0.004 265 / 0.10);
+    --border-strong: oklch(96% 0.004 265 / 0.26);
+    --background-hover: oklch(96% 0.004 265 / 0.10);
+
+    /* Composed shadows must be re-declared, not just their inputs: a custom
+       property's var() references are substituted on the element that declares
+       it, so overriding --border here would never reach a --shadow-border that
+       was composed up on :root. */
+    --shadow-border: 0 0 0 1px oklch(96% 0.004 265 / 0.22);
+    --shadow-border-subtle: 0 0 0 1px oklch(96% 0.004 265 / 0.12);
+    --shadow-elevated:
+      0 0 0 1px oklch(96% 0.004 265 / 0.22),
+      0 24px 60px -28px oklch(0% 0 0 / 0.7);
+
+    color: var(--foreground-muted);
+  }
+
+  /* Nav surface. Discrete scrolled/not state, so a token-backed CSS transition
+     is the right tool here rather than a spring (AGENTS.md rule 1 exception). */
+  .nav-bar {
+    background: transparent;
+    box-shadow: 0 1px 0 0 transparent;
+    transition:
+      background var(--duration-normal) var(--ease-entrance),
+      box-shadow var(--duration-normal) var(--ease-entrance);
+  }
+  .nav-bar[data-scrolled="true"] {
+    background: color-mix(in oklch, var(--background) 94%, transparent);
+    box-shadow: 0 1px 0 0 var(--border);
+  }
   /* Display face — Instrument Serif, roman, always */
   .display {
     font-family: var(--font-display);
