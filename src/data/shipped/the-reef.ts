@@ -161,5 +161,10 @@ export const theReef: ShippedWork = {
       url: "https://youtube.com/watch?v=lpcJWo2YjWY",
       kind: "short",
     },
+    {
+      label: "The Reef on Symbiothus",
+      url: "https://symbiothus.vercel.app/films/the-reef",
+      kind: "site",
+    },
   ],
 };
