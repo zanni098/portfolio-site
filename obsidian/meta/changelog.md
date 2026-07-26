@@ -8,6 +8,31 @@ updated: 2026-07-25
 Chronological log of notable changes to the project. Newest first.
 This is a human-curated log — not a mirror of `git log`.
 
+## 2026-07-26
+
+- **First dynamic route: `/work/[slug]`, plus a `src/data/shipped/` content
+  layer** — the site now carries long-form hub pages for shipped work, starting
+  with `/work/the-reef`. This is the canonical page that every external surface
+  (YouTube, Medium, Contra, social) links back to, so it owns the canonical URL
+  and the `VideoObject` JSON-LD.
+
+  The content layer is deliberately split in two. Authored metadata — facts,
+  cast, script beats, prose, outbound links — lives in a typed
+  `ShippedWork` object per work. The long production prompts are **not**
+  duplicated into TypeScript; the project's own `PRODUCTION.md` is copied in
+  alongside it and its fenced blocks are parsed at build time by
+  `production-doc.ts`. One source of truth, and a 45KB prompt library renders
+  without a markdown dependency being added to the stack.
+
+  New feature components under `components/work/` — `WorkFacts`, `WorkScript`,
+  `PromptLibrary`, `WorkLinks`. `PromptLibrary` uses native `<details>`
+  disclosures, so nineteen several-hundred-word prompts stay collapsed until
+  asked for and need no client JS.
+
+  `WorkLinks` renders a `links` array that is **backfilled after publication**.
+  A surface that failed to publish is simply absent from the list rather than
+  rendering a broken link.
+
 ## 2026-07-25
 
 - **Released into the public domain (Unlicense)** — the starter now ships a root

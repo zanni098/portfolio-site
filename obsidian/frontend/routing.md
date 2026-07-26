@@ -36,6 +36,19 @@ here on route `/` (see [[ai-agent-guide]] / [[new-page]]).
 | Route | File | View |
 |-------|------|------|
 | `/` | `src/app/page.tsx` | `views/home.tsx` → `HomeView` |
+| `/work/[slug]` | `src/app/work/[slug]/page.tsx` | `views/work-detail.tsx` → `WorkDetailView` |
+
+### Dynamic routes
+
+`/work/[slug]` is the first dynamic segment in the project. Two things about it
+are worth copying if you add another:
+
+- **`params` is a Promise.** Next.js 16 hands route params in asynchronously, so
+  both `generateMetadata` and the page component must `await params`.
+- **The view is an async Server Component.** `WorkDetailView` reads and parses a
+  production document from disk at build time. Because `generateStaticParams`
+  enumerates the slugs, the read happens during prerender and never at request
+  time — the route ships as SSG.
 
 ## Special files
 
