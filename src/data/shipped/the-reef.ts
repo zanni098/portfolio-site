@@ -166,5 +166,15 @@ export const theReef: ShippedWork = {
       url: "https://symbiothus.vercel.app/films/the-reef",
       kind: "site",
     },
+    {
+      label: "Read the full breakdown on Medium",
+      url: "https://medium.com/@zuhaibkhann098/the-reef-building-a-60-second-animated-short-against-an-8-second-ceiling-395cde8df99c",
+      kind: "post",
+    },
+    {
+      label: "The Reef on Contra",
+      url: "https://contra.com/p/W6ULc2Zb-the-reef-an-animated-short-under-constraints",
+      kind: "profile",
+    },
   ],
 };
